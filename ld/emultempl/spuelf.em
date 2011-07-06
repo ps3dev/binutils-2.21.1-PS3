@@ -397,7 +397,11 @@ spu_elf_relink (void)
   argv[my_argc++] = "-T";
   argv[my_argc++] = auto_overlay_file;
   argv[my_argc] = 0;
+#if defined(_WIN32)
+  execvp (argv[0], (const char* const*) argv);
+#else
   execvp (argv[0], (char *const *) argv);
+#endif
   perror (argv[0]);
   _exit (127);
 }
